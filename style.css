@@ -1,0 +1,248 @@
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#6c5ce7;--primary-light:#a29bfe;--secondary:#00cec9;--accent:#fd79a8;--success:#00b894;--danger:#e17055;--warning:#fdcb6e;--bg-dark:#2d3436;--text-dark:#2d3436;--text-light:#fff;--card-bg:rgba(255,255,255,0.95);--shadow:0 10px 40px rgba(0,0,0,0.2);--shadow-sm:0 4px 15px rgba(0,0,0,0.1);--radius:20px;--radius-sm:12px}
+body{font-family:'Nunito',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;overflow:hidden;color:var(--text-dark)}
+.screen{display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:1}
+.screen.active{display:flex;align-items:center;justify-content:center;animation:fadeIn .4s ease}
+.screen.overlay{z-index:100;background:rgba(0,0,0,0.6);backdrop-filter:blur(5px)}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{transform:translateY(50px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes bounceIn{0%{transform:scale(.3);opacity:0}50%{transform:scale(1.05)}70%{transform:scale(.9)}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}10%,30%,50%,70%,90%{transform:translateX(-5px)}20%,40%,60%,80%{transform:translateX(5px)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes confettiFall{0%{transform:translateY(-100vh) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+@keyframes trophySpin{0%{transform:rotateY(0)}100%{transform:rotateY(360deg)}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 10px rgba(253,203,110,0.3)}50%{box-shadow:0 0 30px rgba(253,203,110,0.8)}}
+.hidden{display:none!important}
+
+/* ===== AUTH SCREEN ===== */
+.auth-content{text-align:center;animation:slideUp .6s ease;width:90%;max-width:400px}
+.auth-card{background:var(--card-bg);border-radius:var(--radius);padding:30px;box-shadow:var(--shadow);margin-top:10px}
+.auth-tabs{display:flex;gap:0;margin-bottom:20px;border-radius:var(--radius-sm);overflow:hidden;border:2px solid #eee}
+.auth-tab{flex:1;padding:12px;border:none;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;background:#f5f5f5;color:#999;transition:all .3s}
+.auth-tab.active{background:var(--primary);color:white}
+.auth-input{width:100%;padding:14px 18px;border:2px solid #eee;border-radius:var(--radius-sm);font-family:'Nunito',sans-serif;font-size:16px;font-weight:600;margin-bottom:12px;outline:none;transition:border-color .3s}
+.auth-input:focus{border-color:var(--primary)}
+.auth-error{color:var(--danger);font-size:13px;font-weight:700;min-height:20px;margin-bottom:10px}
+.auth-btn{width:100%;min-width:unset;margin-top:5px}
+.logo-container{margin-bottom:10px}
+.logo-text{font-family:'Fredoka One',cursive;font-size:64px;color:white;text-shadow:4px 4px 0 rgba(0,0,0,0.2);letter-spacing:5px}
+.logo-highlight{color:var(--warning)}
+.logo-tagline{font-size:18px;color:rgba(255,255,255,0.8);font-weight:600;letter-spacing:8px;text-transform:uppercase;margin-top:-5px}
+.brain-icon{font-size:70px;animation:float 3s ease-in-out infinite;margin:15px 0 20px}
+.welcome-hint{margin-top:20px;color:rgba(255,255,255,0.6);font-size:13px;font-weight:600}
+
+/* ===== MENU SCREEN ===== */
+.menu-content{text-align:center;animation:slideUp .6s ease;width:90%;max-width:450px}
+.menu-header{margin-bottom:25px}
+.menu-logo{font-family:'Fredoka One',cursive;font-size:48px;color:white;text-shadow:3px 3px 0 rgba(0,0,0,0.2)}
+.menu-user{color:rgba(255,255,255,0.8);font-size:16px;font-weight:600;margin-top:5px}
+.menu-continue-info{margin-top:15px;padding:12px 20px;background:rgba(255,255,255,0.15);border-radius:var(--radius-sm);color:rgba(255,255,255,0.8);font-size:14px;font-weight:600;backdrop-filter:blur(5px)}
+
+/* ===== BUTTONS ===== */
+.menu-buttons{display:flex;flex-direction:column;gap:12px;align-items:center}
+.menu-btn{font-family:'Nunito',sans-serif;font-size:18px;font-weight:800;padding:16px 45px;border:none;border-radius:50px;cursor:pointer;transition:all .3s;text-transform:uppercase;letter-spacing:2px;min-width:280px}
+.menu-btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+.menu-btn:active{transform:translateY(0)}
+.btn-new{background:linear-gradient(135deg,var(--success),#55efc4);color:white;box-shadow:0 5px 20px rgba(0,184,148,0.4)}
+.btn-continue{background:linear-gradient(135deg,#0984e3,#74b9ff);color:white;box-shadow:0 5px 20px rgba(9,132,227,0.4)}
+.btn-load{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:white;box-shadow:0 5px 20px rgba(108,92,231,0.4)}
+.btn-achieve{background:linear-gradient(135deg,var(--warning),#f9ca24);color:var(--text-dark);box-shadow:0 5px 20px rgba(253,203,110,0.4)}
+.btn-back{background:linear-gradient(135deg,#636e72,#b2bec3);color:white;box-shadow:0 5px 20px rgba(99,110,114,0.3);min-width:200px;padding:14px 35px;font-size:15px}
+.btn-icon{margin-right:8px}
+.btn-admin{background:linear-gradient(135deg,#e17055,#d63031);color:white;box-shadow:0 5px 20px rgba(214,48,49,0.4)}
+
+/* ===== GAME SCREEN ===== */
+#screen-game{flex-direction:column;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%)}
+.game-header{width:100%;padding:15px 25px;background:rgba(0,0,0,0.15);backdrop-filter:blur(10px)}
+.level-display{text-align:center;margin-bottom:10px}
+.level-label{color:rgba(255,255,255,0.7);font-size:12px;font-weight:800;letter-spacing:4px;text-transform:uppercase}
+.level-number{font-family:'Fredoka One',cursive;font-size:42px;color:white;margin:0 8px}
+.level-total{color:rgba(255,255,255,0.5);font-size:18px;font-weight:700}
+.progress-bar-container{width:100%;height:8px;background:rgba(255,255,255,0.2);border-radius:10px;overflow:hidden;margin-bottom:10px}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--warning),var(--accent));border-radius:10px;transition:width .5s ease}
+.game-stats{display:flex;justify-content:center;gap:25px}
+.stat{display:flex;align-items:center;gap:5px;color:white;font-weight:700;font-size:15px}
+.stat-icon{font-size:16px}
+.game-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;width:100%;max-width:700px;margin:0 auto;overflow-y:auto}
+.difficulty-badge{padding:6px 20px;border-radius:50px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:2px;margin-bottom:15px;color:white;background:rgba(255,255,255,0.2);backdrop-filter:blur(5px)}
+.puzzle-card{background:var(--card-bg);border-radius:var(--radius);padding:30px;width:100%;box-shadow:var(--shadow);text-align:center;animation:bounceIn .5s ease;margin-bottom:20px}
+.puzzle-category{display:inline-block;padding:4px 14px;border-radius:50px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:2px;background:linear-gradient(135deg,var(--primary),var(--accent));color:white;margin-bottom:12px}
+.puzzle-question{font-family:'Fredoka One',cursive;font-size:22px;color:var(--text-dark);line-height:1.4;word-wrap:break-word}
+.puzzle-hint{margin-top:15px;padding:12px 20px;background:linear-gradient(135deg,#ffeaa7,#fdcb6e);border-radius:var(--radius-sm);font-size:14px;font-weight:600;color:var(--text-dark);animation:slideUp .3s ease}
+.game-footer{padding:15px 25px;text-align:center}
+.btn-save-quit{font-family:'Nunito',sans-serif;padding:10px 25px;border:none;border-radius:50px;background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.8);font-size:14px;font-weight:700;cursor:pointer;transition:all .3s;backdrop-filter:blur(5px)}
+.btn-save-quit:hover{background:rgba(255,255,255,0.25);color:white}
+
+/* ===== VISUAL PUZZLES ===== */
+.visual-container{width:100%;max-width:500px;margin-bottom:20px;animation:slideUp .5s ease}
+.visual-grid{display:grid;gap:8px;justify-items:center;padding:15px;background:rgba(255,255,255,0.1);border-radius:var(--radius);backdrop-filter:blur(10px)}
+.visual-cell{width:60px;height:60px;display:flex;align-items:center;justify-content:center;font-size:32px;background:rgba(255,255,255,0.15);border-radius:12px;cursor:pointer;transition:all .2s;border:3px solid transparent;user-select:none}
+.visual-cell:hover{transform:scale(1.15);background:rgba(255,255,255,0.3);box-shadow:0 0 15px rgba(255,255,255,0.3)}
+.visual-cell:active{transform:scale(.95)}
+.visual-cell.correct{border-color:var(--success);background:rgba(0,184,148,0.4);animation:pulse .5s ease}
+.visual-cell.wrong{border-color:var(--danger);background:rgba(225,112,85,0.4);animation:shake .5s ease}
+.visual-cell.disabled{pointer-events:none;opacity:.5}
+.stroop-container{width:100%;margin-bottom:20px;text-align:center;animation:slideUp .5s ease}
+.stroop-text{font-family:'Fredoka One',cursive;font-size:60px;font-weight:900;letter-spacing:6px;text-transform:uppercase;padding:30px;background:rgba(255,255,255,0.15);border-radius:var(--radius);backdrop-filter:blur(10px);text-shadow:2px 2px 4px rgba(0,0,0,0.2);animation:bounceIn .5s ease}
+.rebus-container{width:100%;margin-bottom:20px;text-align:center;animation:slideUp .5s ease}
+.rebus-emojis{display:flex;justify-content:center;gap:20px;padding:30px;background:rgba(255,255,255,0.15);border-radius:var(--radius);backdrop-filter:blur(10px)}
+.rebus-emoji{font-size:56px;animation:bounceIn .5s ease;filter:drop-shadow(2px 2px 4px rgba(0,0,0,0.3))}
+.rebus-plus{font-size:36px;color:rgba(255,255,255,0.6);align-self:center;font-weight:800}
+.pattern-display{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;padding:20px;background:rgba(255,255,255,0.1);border-radius:var(--radius);backdrop-filter:blur(10px);margin-bottom:15px}
+.pattern-item{font-size:30px;padding:8px;background:rgba(255,255,255,0.15);border-radius:8px;animation:bounceIn .3s ease}
+.pattern-item:last-child{background:rgba(253,203,110,0.3);border:2px dashed var(--warning);color:white;min-width:48px;display:flex;align-items:center;justify-content:center}
+.visual-answers{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:400px;animation:slideUp .5s ease}
+
+/* ===== ANSWERS ===== */
+.answers-container{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;animation:slideUp .5s ease}
+.answer-btn{font-family:'Nunito',sans-serif;font-size:15px;font-weight:700;padding:16px 12px;border:3px solid transparent;border-radius:var(--radius-sm);cursor:pointer;transition:all .2s;background:var(--card-bg);color:var(--text-dark);box-shadow:var(--shadow-sm);text-align:center;word-wrap:break-word}
+.answer-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.15);border-color:var(--primary-light)}
+.answer-btn:active{transform:translateY(0)}
+.answer-btn.correct{background:linear-gradient(135deg,var(--success),#55efc4);color:white;border-color:var(--success);animation:pulse .3s ease}
+.answer-btn.wrong{background:linear-gradient(135deg,var(--danger),#fab1a0);color:white;border-color:var(--danger);animation:shake .5s ease}
+.answer-btn.disabled{pointer-events:none;opacity:.6}
+
+/* ===== TEXT INPUT ===== */
+.text-input-container{display:flex;gap:10px;width:100%;max-width:500px;animation:slideUp .5s ease}
+.text-answer-input{flex:1;font-family:'Nunito',sans-serif;font-size:18px;font-weight:700;padding:14px 18px;border:3px solid rgba(255,255,255,0.3);border-radius:var(--radius-sm);background:rgba(255,255,255,0.95);color:var(--text-dark);outline:none;transition:border-color .3s}
+.text-answer-input:focus{border-color:var(--warning)}
+.btn-submit{font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;padding:14px 25px;border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--success),#55efc4);color:white;cursor:pointer;transition:all .3s;text-transform:uppercase}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,184,148,0.4)}
+
+/* ===== HINT ===== */
+.btn-hint{font-family:'Nunito',sans-serif;margin-top:18px;padding:10px 25px;border:2px solid rgba(255,255,255,0.3);border-radius:50px;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.8);font-size:14px;font-weight:700;cursor:pointer;transition:all .3s;backdrop-filter:blur(5px)}
+.btn-hint:hover{background:rgba(255,255,255,0.2);color:white;border-color:rgba(255,255,255,0.5)}
+
+/* ===== CORRECT / WRONG ===== */
+.correct-content{text-align:center;animation:bounceIn .5s ease}
+.correct-icon{font-size:80px;animation:float 2s ease-in-out infinite}
+.correct-title{font-family:'Fredoka One',cursive;font-size:42px;color:var(--success);margin:15px 0}
+.correct-message{color:rgba(255,255,255,0.8);font-size:18px;margin-bottom:15px}
+.achievement-popup{background:rgba(255,255,255,0.15);border:2px solid var(--warning);border-radius:var(--radius);padding:15px 25px;margin-bottom:20px;backdrop-filter:blur(10px);animation:glowPulse 2s ease infinite}
+.achievement-popup .ach-icon{font-size:32px;display:block;margin-bottom:5px}
+.achievement-popup .ach-name{font-family:'Fredoka One',cursive;color:var(--warning);font-size:18px}
+.achievement-popup .ach-desc{color:rgba(255,255,255,0.7);font-size:13px}
+.wrong-content{text-align:center;background:var(--card-bg);padding:35px;border-radius:var(--radius);box-shadow:var(--shadow);animation:shake .5s ease;max-width:450px}
+.wrong-icon{font-size:56px}
+.wrong-title{font-family:'Fredoka One',cursive;font-size:32px;color:var(--danger);margin:10px 0}
+.wrong-message{color:#636e72;font-size:15px;margin-bottom:20px;font-weight:600;white-space:pre-line}
+
+/* ===== TROPHY ===== */
+#screen-trophy{background:linear-gradient(135deg,#2d3436 0%,#000 100%)}
+.trophy-content{text-align:center;animation:bounceIn .8s ease}
+.trophy-icon{font-size:110px;animation:trophySpin 3s linear infinite;display:inline-block}
+.trophy-title{font-family:'Fredoka One',cursive;font-size:36px;color:var(--warning);margin:20px 0 5px;text-shadow:0 0 20px rgba(253,203,110,0.5)}
+.trophy-name{font-family:'Fredoka One',cursive;font-size:48px;color:white;text-shadow:0 0 30px rgba(255,255,255,0.3);margin-bottom:10px}
+.trophy-desc{color:rgba(255,255,255,0.6);font-size:16px;margin-bottom:30px}
+.trophy-stats{display:flex;justify-content:center;gap:40px;margin-bottom:30px}
+.trophy-stat{display:flex;flex-direction:column;align-items:center}
+.trophy-stat-value{font-family:'Fredoka One',cursive;font-size:36px;color:var(--warning)}
+.trophy-stat-label{color:rgba(255,255,255,0.5);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px}
+
+/* ===== LEADERBOARD ===== */
+.leaderboard-content{text-align:center;background:var(--card-bg);padding:35px;border-radius:var(--radius);box-shadow:var(--shadow);width:90%;max-width:600px;max-height:85vh;overflow-y:auto;animation:slideUp .6s ease}
+.leaderboard-title{font-family:'Fredoka One',cursive;font-size:32px;color:var(--primary);margin-bottom:15px}
+.leaderboard-tabs{display:flex;gap:0;border-radius:var(--radius-sm);overflow:hidden;border:2px solid #eee;margin-bottom:20px}
+.lb-tab{flex:1;padding:10px;border:none;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;background:#f5f5f5;color:#999;transition:all .3s}
+.lb-tab.active{background:var(--primary);color:white}
+.lb-table-container{overflow-x:auto}
+.lb-table{width:100%;border-collapse:collapse;font-size:14px}
+.lb-table th{padding:10px 8px;background:var(--primary);color:white;font-weight:800;text-transform:uppercase;font-size:11px;letter-spacing:1px}
+.lb-table th:first-child{border-radius:8px 0 0 0}
+.lb-table th:last-child{border-radius:0 8px 0 0}
+.lb-table td{padding:10px 8px;border-bottom:1px solid #eee;font-weight:600}
+.lb-table tr:hover td{background:rgba(108,92,231,0.05)}
+.lb-table .lb-rank{font-family:'Fredoka One',cursive;color:var(--primary);font-size:16px}
+.lb-table .lb-rank.gold{color:#FFD700}
+.lb-table .lb-rank.silver{color:#C0C0C0}
+.lb-table .lb-rank.bronze{color:#CD7F32}
+.lb-empty{padding:30px;color:#999;font-weight:600}
+
+/* ===== ACHIEVEMENTS ===== */
+.achievements-content{text-align:center;background:var(--card-bg);padding:35px;border-radius:var(--radius);box-shadow:var(--shadow);width:90%;max-width:600px;max-height:85vh;overflow-y:auto;animation:slideUp .6s ease}
+.achievements-title{font-family:'Fredoka One',cursive;font-size:32px;color:var(--primary);margin-bottom:20px}
+.achievements-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.ach-badge{padding:15px 10px;border-radius:var(--radius-sm);border:2px solid #eee;transition:all .3s;text-align:center}
+.ach-badge.unlocked{border-color:var(--warning);background:rgba(253,203,110,0.08);animation:glowPulse 3s ease infinite}
+.ach-badge.locked{opacity:.4;filter:grayscale(1)}
+.ach-badge-icon{font-size:32px;margin-bottom:5px}
+.ach-badge-name{font-family:'Fredoka One',cursive;font-size:13px;color:var(--text-dark);margin-bottom:3px}
+.ach-badge-desc{font-size:11px;color:#999;font-weight:600}
+
+/* ===== LOADING ===== */
+.loading{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:200;color:white}
+.spinner{width:50px;height:50px;border:4px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:15px}
+
+/* ===== CONFETTI ===== */
+#confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:300}
+.confetti-piece{position:absolute;width:12px;height:12px;top:-20px;animation:confettiFall linear forwards}
+
+/* ===== ADMIN PANEL ===== */
+.admin-content{text-align:center;background:var(--card-bg);padding:30px;border-radius:var(--radius);box-shadow:var(--shadow);width:90%;max-width:650px;max-height:88vh;overflow-y:auto;animation:slideUp .6s ease}
+.admin-title{font-family:'Fredoka One',cursive;font-size:28px;color:var(--danger);margin-bottom:5px}
+.admin-role-badge{font-size:14px;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:2px;margin-bottom:18px}
+.admin-section{background:#f8f9fa;border-radius:var(--radius-sm);padding:16px;margin-bottom:12px;text-align:left}
+.admin-section-title{font-family:'Fredoka One',cursive;font-size:15px;color:var(--text-dark);margin-bottom:10px}
+.admin-row{display:flex;gap:10px;align-items:center}
+.admin-input{flex:1;padding:10px 14px;border:2px solid #ddd;border-radius:8px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;outline:none;transition:border-color .3s}
+.admin-input:focus{border-color:var(--primary)}
+.admin-select{flex:1;padding:10px 14px;border:2px solid #ddd;border-radius:8px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;background:white;outline:none;cursor:pointer}
+.admin-action-btn{padding:10px 18px;border:none;border-radius:8px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:1px;background:var(--primary);color:white;white-space:nowrap}
+.admin-action-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(108,92,231,0.4)}
+.admin-danger{border:2px solid rgba(225,112,85,0.3);background:rgba(225,112,85,0.04)}
+.admin-danger-btn{background:var(--danger)}
+.admin-danger-btn:hover{box-shadow:0 4px 12px rgba(225,112,85,0.4)}
+.admin-user-info{font-size:13px;color:#999;font-weight:600;margin-top:8px;min-height:18px}
+.admin-table-wrap{overflow-x:auto;max-height:250px;overflow-y:auto}
+.admin-table{width:100%;border-collapse:collapse;font-size:13px}
+.admin-table th{padding:8px 6px;background:var(--primary);color:white;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:1px}
+.admin-table th:first-child{border-radius:6px 0 0 0}
+.admin-table th:last-child{border-radius:0 6px 0 0}
+.admin-table td{padding:8px 6px;border-bottom:1px solid #eee;font-weight:600}
+.admin-table tr:hover td{background:rgba(108,92,231,0.05)}
+.admin-status{margin-top:12px;padding:10px;border-radius:8px;font-weight:700;font-size:14px;display:none}
+.admin-status.show{display:block}
+.admin-status.success{background:rgba(0,184,148,0.1);color:var(--success);border:1px solid rgba(0,184,148,0.3)}
+.admin-status.error{background:rgba(225,112,85,0.1);color:var(--danger);border:1px solid rgba(225,112,85,0.3)}
+.admin-achievements-view{font-size:13px;font-weight:600;color:#555;min-height:20px;line-height:1.8}
+.admin-ach-tag{display:inline-block;padding:3px 10px;border-radius:50px;font-size:12px;font-weight:700;background:rgba(253,203,110,0.15);border:1px solid rgba(253,203,110,0.4);margin:2px 4px 2px 0}
+
+/* ===== OWNER BADGE ===== */
+.owner-badge{display:inline-block;padding:2px 10px;border-radius:50px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;background:linear-gradient(135deg,#FFD700,#FFA500);color:white;margin-left:8px;vertical-align:middle;box-shadow:0 2px 8px rgba(255,215,0,0.4)}
+.admin-badge{display:inline-block;padding:2px 10px;border-radius:50px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;background:linear-gradient(135deg,var(--danger),#c0392b);color:white;margin-left:8px;vertical-align:middle}
+
+/* ===== ACHIEVEMENT CARDS ===== */
+.achievements-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:15px;margin-top:15px}
+.achievement-card{padding:20px;border-radius:var(--radius);text-align:center;transition:all .3s;background:#f8f9fa;border:2px solid #eee}
+.achievement-card.unlocked{border-color:var(--warning);background:rgba(253,203,110,0.1);box-shadow:0 0 10px rgba(253,203,110,0.2)}
+.achievement-card.locked{opacity:.45}
+.achievement-icon{font-size:36px;margin-bottom:8px}
+.achievement-name{font-weight:800;font-size:14px;color:var(--text-dark);margin-bottom:4px}
+.achievement-desc{font-size:12px;color:#666}
+.achievement-popup{margin-top:15px;padding:12px;background:rgba(255,215,0,0.2);border-radius:var(--radius);border:1px solid rgba(255,215,0,0.4)}
+.achievement-popup-item{font-weight:800;font-size:16px;color:#FFD700;padding:4px 0}
+
+/* ===== LEADERBOARD HIGHLIGHT ===== */
+.lb-you td{background:rgba(108,92,231,0.15)!important;font-weight:800}
+
+/* ===== COUNT INPUT ===== */
+.count-input-area{display:flex;align-items:center;gap:12px;justify-content:center;margin-top:15px;padding:15px;background:rgba(255,255,255,0.1);border-radius:var(--radius);backdrop-filter:blur(10px)}
+.count-input-area p{color:white;font-weight:700;margin:0}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:600px){
+    .logo-text{font-size:44px}
+    .brain-icon{font-size:55px}
+    .menu-btn{font-size:15px;padding:14px 30px;min-width:240px}
+    .puzzle-question{font-size:18px}
+    .answers-container{grid-template-columns:1fr}
+    .level-number{font-size:32px}
+    .puzzle-card{padding:20px 15px}
+    .stroop-text{font-size:42px}
+    .rebus-emoji{font-size:40px}
+    .visual-cell{width:50px;height:50px;font-size:26px}
+    .leaderboard-content,.achievements-content{padding:20px 15px}
+    .achievements-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
+}

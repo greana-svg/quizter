@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizter - Brain Challenge</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="confetti-container"></div>
+
+    <!-- SCREEN: Auth (Login / Register) -->
+    <div id="screen-auth" class="screen active">
+        <div class="auth-content">
+            <div class="logo-container">
+                <h1 class="logo-text">Q<span class="logo-highlight">UIZ</span>TER</h1>
+                <p class="logo-tagline">Brain Challenge</p>
+            </div>
+            <div class="brain-icon">&#129504;</div>
+
+            <div class="auth-card">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" onclick="showAuthTab('login')">Login</button>
+                    <button class="auth-tab" onclick="showAuthTab('register')">Create Account</button>
+                </div>
+
+                <form id="auth-form" onsubmit="handleAuth(event)">
+                    <input type="text" id="auth-username" class="auth-input" placeholder="Username" autocomplete="username" required>
+                    <input type="password" id="auth-password" class="auth-input" placeholder="Password" autocomplete="current-password" required>
+                    <p id="auth-error" class="auth-error"></p>
+                    <button type="submit" id="auth-submit" class="menu-btn btn-new auth-btn">Login</button>
+                </form>
+            </div>
+
+            <p class="welcome-hint">100+ levels of brain-bending puzzles!</p>
+        </div>
+    </div>
+
+    <!-- SCREEN: Main Menu -->
+    <div id="screen-menu" class="screen">
+        <div class="menu-content">
+            <div class="menu-header">
+                <h1 class="menu-logo">Q<span class="logo-highlight">UIZ</span>TER</h1>
+                <p class="menu-user">Welcome, <span id="menu-username">Player</span></p>
+            </div>
+            <div class="menu-buttons">
+                <button class="menu-btn btn-new" onclick="playNewGame()">
+                    <span class="btn-icon">&#10024;</span> New Game
+                </button>
+                <button class="menu-btn btn-continue" onclick="continueGame()">
+                    <span class="btn-icon">&#9654;</span> Continue
+                </button>
+                <button class="menu-btn btn-load" onclick="showLeaderboard()">
+                    <span class="btn-icon">&#127942;</span> Leaderboard
+                </button>
+                <button class="menu-btn btn-achieve" onclick="showAchievements()">
+                    <span class="btn-icon">&#127941;</span> Achievements
+                </button>
+                <button id="btn-admin-menu" class="menu-btn btn-admin hidden" onclick="showAdminPanel()">
+                    <span class="btn-icon">&#128736;</span> Admin Panel
+                </button>
+                <button class="menu-btn btn-back" onclick="doLogout()">
+                    <span class="btn-icon">&#128682;</span> Logout
+                </button>
+            </div>
+            <div id="menu-continue-info" class="menu-continue-info hidden"></div>
+        </div>
+    </div>
+
+    <!-- SCREEN: Game -->
+    <div id="screen-game" class="screen">
+        <div class="game-header">
+            <div class="level-display">
+                <span class="level-label">LEVEL</span>
+                <span id="current-level" class="level-number">1</span>
+                <span id="level-total" class="level-total">/ 100</span>
+            </div>
+            <div class="progress-bar-container">
+                <div id="progress-bar" class="progress-bar" style="width: 1%"></div>
+            </div>
+            <div class="game-stats">
+                <div class="stat">
+                    <span class="stat-icon">&#11088;</span>
+                    <span id="score-display">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-icon">&#128293;</span>
+                    <span id="streak-display">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-icon">&#9201;</span>
+                    <span id="timer-display">00:00</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-body">
+            <div id="difficulty-badge" class="difficulty-badge">Warm Up</div>
+            <div id="puzzle-card" class="puzzle-card">
+                <div id="puzzle-category" class="puzzle-category">Riddle</div>
+                <h2 id="puzzle-question" class="puzzle-question">Loading...</h2>
+                <div id="puzzle-hint" class="puzzle-hint hidden"></div>
+            </div>
+
+            <div id="visual-container" class="visual-container hidden"></div>
+            <div id="stroop-container" class="stroop-container hidden">
+                <div id="stroop-text" class="stroop-text"></div>
+            </div>
+            <div id="rebus-container" class="rebus-container hidden">
+                <div id="rebus-emojis" class="rebus-emojis"></div>
+            </div>
+
+            <div id="answers-container" class="answers-container"></div>
+
+            <div id="text-input-container" class="text-input-container hidden">
+                <input type="text" id="text-answer" class="text-answer-input" placeholder="Type your answer..." autocomplete="off">
+                <button id="btn-submit-answer" class="btn-submit" onclick="submitTextAnswer()">Submit</button>
+            </div>
+
+            <button id="btn-hint" class="btn-hint" onclick="showHint()">&#128161; Hint</button>
+        </div>
+
+        <div class="game-footer">
+            <button class="btn-save-quit" onclick="saveAndQuit()">&#128190; Save & Quit</button>
+        </div>
+    </div>
+
+    <!-- SCREEN: Correct Answer -->
+    <div id="screen-correct" class="screen overlay">
+        <div class="correct-content">
+            <div class="correct-icon">&#127881;</div>
+            <h2 class="correct-title">Correct!</h2>
+            <p id="correct-message" class="correct-message">Great job!</p>
+            <div id="achievement-popup" class="achievement-popup hidden"></div>
+            <button class="menu-btn btn-new" onclick="nextLevel()">Next Level &#10145;</button>
+        </div>
+    </div>
+
+    <!-- SCREEN: Wrong Answer -->
+    <div id="screen-wrong" class="screen overlay">
+        <div class="wrong-content">
+            <div class="wrong-icon">&#128532;</div>
+            <h2 class="wrong-title">Not Quite!</h2>
+            <p id="wrong-answer-reveal" class="wrong-message"></p>
+            <button class="menu-btn btn-new" onclick="retryLevel()">Try Again &#128260;</button>
+        </div>
+    </div>
+
+    <!-- SCREEN: Trophy / Infinite Unlock -->
+    <div id="screen-trophy" class="screen">
+        <div class="trophy-content">
+            <div class="trophy-icon">&#127942;</div>
+            <h1 id="trophy-title" class="trophy-title">TROPHY UNLOCKED!</h1>
+            <h2 id="trophy-name" class="trophy-name">"Smartest"</h2>
+            <p id="trophy-desc" class="trophy-desc">You conquered all 100 levels!</p>
+            <div class="trophy-stats">
+                <div class="trophy-stat">
+                    <span class="trophy-stat-value" id="final-score">0</span>
+                    <span class="trophy-stat-label">Final Score</span>
+                </div>
+                <div class="trophy-stat">
+                    <span class="trophy-stat-value" id="final-time">00:00</span>
+                    <span class="trophy-stat-label">Total Time</span>
+                </div>
+            </div>
+            <button id="btn-infinite-continue" class="menu-btn btn-new" onclick="startInfiniteMode()">
+                Start Infinite Mode &#10145;
+            </button>
+            <button class="menu-btn btn-back" onclick="backToMenu()" style="margin-top:10px">Back to Menu</button>
+        </div>
+    </div>
+
+    <!-- SCREEN: Leaderboard -->
+    <div id="screen-leaderboard" class="screen">
+        <div class="leaderboard-content">
+            <h1 class="leaderboard-title">&#127942; Leaderboard</h1>
+            <div class="leaderboard-tabs">
+                <button class="lb-tab active" onclick="showLBTab('level',this)">By Level</button>
+                <button class="lb-tab" onclick="showLBTab('score',this)">By Score</button>
+                <button class="lb-tab" onclick="showLBTab('time',this)">By Time</button>
+            </div>
+            <div id="lb-table-container" class="lb-table-container">
+                <table class="lb-table">
+                    <thead><tr><th>#</th><th>Player</th><th>Level</th><th>Score</th><th>Streak</th></tr></thead>
+                    <tbody id="lb-tbody"></tbody>
+                </table>
+            </div>
+            <button class="menu-btn btn-back" onclick="backToMenu()" style="margin-top:20px">Back</button>
+        </div>
+    </div>
+
+    <!-- SCREEN: Achievements -->
+    <div id="screen-achievements" class="screen">
+        <div class="achievements-content">
+            <h1 class="achievements-title">&#127941; Achievements</h1>
+            <div id="achievements-grid" class="achievements-grid"></div>
+            <button class="menu-btn btn-back" onclick="backToMenu()" style="margin-top:20px">Back</button>
+        </div>
+    </div>
+
+    <!-- SCREEN: Admin Panel -->
+    <div id="screen-admin" class="screen">
+        <div class="admin-content">
+            <h1 class="admin-title">&#128736; Admin Panel</h1>
+            <p id="admin-role-badge" class="admin-role-badge"></p>
+
+            <div class="admin-section">
+                <h3 class="admin-section-title">Select Target Player</h3>
+                <select id="admin-user-select" class="admin-select" onchange="onAdminUserChange()">
+                    <option value="">Select player...</option>
+                </select>
+                <p id="admin-user-info" class="admin-user-info"></p>
+            </div>
+
+            <div class="admin-section">
+                <h3 class="admin-section-title">Set Level</h3>
+                <div class="admin-row">
+                    <input type="number" id="admin-level-input" class="admin-input" min="1" max="9999" placeholder="Level (1-9999)">
+                    <button class="admin-action-btn" onclick="adminSetLevel()">Set Level</button>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h3 class="admin-section-title">Set Score</h3>
+                <div class="admin-row">
+                    <input type="number" id="admin-score-input" class="admin-input" min="0" max="999999" placeholder="Score">
+                    <button class="admin-action-btn" onclick="adminSetScore()">Set Score</button>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h3 class="admin-section-title">Set Streak</h3>
+                <div class="admin-row">
+                    <input type="number" id="admin-streak-input" class="admin-input" min="0" max="9999" placeholder="Streak">
+                    <button class="admin-action-btn" onclick="adminSetStreak()">Set Streak</button>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h3 class="admin-section-title">Set Infinite Level</h3>
+                <div class="admin-row">
+                    <input type="number" id="admin-infinite-input" class="admin-input" min="0" max="9999" placeholder="Infinite level (0 = reset)">
+                    <button class="admin-action-btn" onclick="adminSetInfiniteLevel()">Set</button>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h3 class="admin-section-title">Set Total Correct Answers</h3>
+                <div class="admin-row">
+                    <input type="number" id="admin-correct-input" class="admin-input" min="0" max="99999" placeholder="Total correct">
+                    <button class="admin-action-btn" onclick="adminSetTotalCorrect()">Set</button>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h3 class="admin-section-title">Toggle Trophy</h3>
+                <div class="admin-row">
+                    <button class="admin-action-btn" onclick="adminToggleTrophy(true)">Unlock Trophy</button>
+                    <button class="admin-action-btn" onclick="adminToggleTrophy(false)">Lock Trophy</button>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h3 class="admin-section-title">Change Role</h3>
+                <div class="admin-row">
+                    <select id="admin-role-select" class="admin-select">
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                        <option value="owner">Owner</option>
+                    </select>
+                    <button class="admin-action-btn" onclick="adminSetRole()">Set Role</button>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h3 class="admin-section-title">Give Achievement</h3>
+                <div class="admin-row">
+                    <select id="admin-achievement-select" class="admin-select">
+                        <option value="">Select achievement...</option>
+                        <option value="level_10">🦶 First Steps</option>
+                        <option value="level_25">📊 Quarter Way</option>
+                        <option value="level_50">🔥 Half Way</option>
+                        <option value="level_75">💪 Almost There</option>
+                        <option value="level_100">🏆 Smartest</option>
+                        <option value="level_250">🤩 Overachiever</option>
+                        <option value="level_500">🧠 Puzzle Maniac</option>
+                        <option value="level_1000">👑 Champion</option>
+                        <option value="streak_5">🔥 On Fire</option>
+                        <option value="streak_10">⚡ Streak Master</option>
+                        <option value="streak_25">🌟 Unstoppable</option>
+                        <option value="streak_50">🧠 Perfect Mind</option>
+                        <option value="streak_100">⭐ Century Streak</option>
+                        <option value="speed_5">⏱️ Speed Demon</option>
+                        <option value="speed_3">⚡ Lightning Fast</option>
+                        <option value="infinite_10">♾️ Infinite Beginner</option>
+                        <option value="infinite_25">🚀 Infinite Explorer</option>
+                        <option value="infinite_50">👑 Infinite Master</option>
+                        <option value="infinite_100">💎 Infinite Legend</option>
+                        <option value="infinite_200">🏆 Infinite Champion</option>
+                        <option value="infinite_500">✨ Infinite God</option>
+                        <option value="score_500">🎯 Score Hunter</option>
+                        <option value="score_1000">💰 Score King</option>
+                        <option value="score_5000">🏅 Score Legend</option>
+                        <option value="score_10000">💎 Score Immortal</option>
+                        <option value="first_clear">✨ Clean Sweep</option>
+                    </select>
+                    <button class="admin-action-btn" onclick="adminGiveAchievement()">Give</button>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h3 class="admin-section-title">User Achievements</h3>
+                <div id="admin-user-achievements" class="admin-achievements-view">Select a player to view</div>
+            </div>
+
+            <div class="admin-section admin-danger">
+                <h3 class="admin-section-title">Danger Zone</h3>
+                <div class="admin-row">
+                    <button class="admin-action-btn admin-danger-btn" onclick="adminResetGame()">Reset Game</button>
+                    <button class="admin-action-btn admin-danger-btn" onclick="adminRemoveAchievements()">Remove Achievements</button>
+                    <button class="admin-action-btn admin-danger-btn" onclick="adminDeleteUser()">Delete User</button>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h3 class="admin-section-title">All Players</h3>
+                <div id="admin-users-table-wrap" class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead><tr><th>User</th><th>Role</th><th>Lvl</th><th>Score</th><th>Streak</th></tr></thead>
+                        <tbody id="admin-users-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="admin-status" class="admin-status"></div>
+            <button class="menu-btn btn-back" onclick="backToMenu()" style="margin-top:20px">Back</button>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="puzzles.js"></script>
+    <script src="infinite.js"></script>
+    <script src="ui.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
